@@ -29,3 +29,15 @@ function clearSnakeLastElement(){
     context.fillStyle= "lightgreen";
     context.fillRect(snake[0].x,snake[0].y,box,box)
 }
+
+function getDirection(){
+    document.addEventListener("keydown",function(event){
+        switch(event.key){
+            case "ArrowRight": direction = "ArrowRight"; break;
+            case "ArrowLeft": direction = "ArrowLeft"; break;
+            case "ArrowUp": direction = "ArrowUp"; break;
+            case "ArrowDown": direction = "ArrowDown"; break;
+        }
+    }) 
+}
+
