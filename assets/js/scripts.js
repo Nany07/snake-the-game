@@ -48,3 +48,36 @@ function checkGameOver(){
             gameOver=true;
     }
 }
+
+function waitTime() {
+    return new Promise(resolve => setTimeout(resolve, 500)); // Aguarda 2 segundos
+}
+
+
+async function snakeGame() {
+
+    criarBG();  
+
+    do{
+        criarCobrinha();
+        getDirection();
+        await waitTime(); // pausa de  1 segundos
+        clearSnakeLastElement();
+
+        if(direction=="ArrowRight"){
+            snake[0].x= snake[0].x+box; 
+        }else if(direction=="ArrowLeft"){
+            snake[0].x= snake[0].x-box; 
+        }else if(direction=="ArrowUp"){
+            snake[0].y= snake[0].y-box; 
+        }else if(direction=="ArrowDown"){
+            snake[0].y= snake[0].y+box;  
+        }
+
+        checkGameOver(); 
+        
+    }while(!gameOver);
+
+}
+
+snakeGame();
