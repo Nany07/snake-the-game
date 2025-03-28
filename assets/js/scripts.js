@@ -41,3 +41,10 @@ function getDirection(){
     }) 
 }
 
+function checkGameOver(){
+    // Caso a cobrinha ultrapassar os limites do canva
+    for(let i=0; i<snake.length; i++){
+        if(snake[i].x<0 || snake[i].x>=512 || snake[i].y<0 || snake[i].y>=512)
+            gameOver=true;
+    }
+}
