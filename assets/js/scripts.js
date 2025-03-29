@@ -9,25 +9,50 @@ snake [0]={
     y:7 * box
 }
 
-let direction = "ArrowUp";
+// testando novo elemento no canva
+let newGoal = [];
+newGoal [0]={
+    x:4 * box,
+    y:4 * box
+}
+
+let direction = "ArrowRight";
 let gameOver = false;
 
-function criarBG(){
+function createBG(){
     context.fillStyle = "lightgreen";
     context.fillRect(0,0, 16*box, 16*box);
 }
 
-function criarCobrinha(){
+function createSneak(){
     for(let i=0; i<snake.length; i++){
         context.fillStyle="green";
-        context.fillRect(snake[i].x,snake[i].y,box,box)
+        context.fillRect(snake[i].x,snake[i].y,box,box);
     }
    
 }
 
-function clearSnakeLastElement(){
+function clearLastElement(){
     context.fillStyle= "lightgreen";
-    context.fillRect(snake[0].x,snake[0].y,box,box)
+    context.fillRect(snake[snake.length-1].x,snake[snake.length-1].y,box,box);
+}
+
+function moveSnake(){
+
+    for(let i=snake.length-1; i>0;i--){
+        snake[i].x=snake[i-1].x;
+        snake[i].y=snake[i-1].y;
+    }
+
+    if(direction=="ArrowRight"){
+        snake[0].x= snake[0].x+box; 
+    }else if(direction=="ArrowLeft"){
+        snake[0].x= snake[0].x-box; 
+    }else if(direction=="ArrowUp"){
+        snake[0].y= snake[0].y-box; 
+    }else if(direction=="ArrowDown"){
+        snake[0].y= snake[0].y+box;  
+    }
 }
 
 function getDirection(){
@@ -50,34 +75,46 @@ function checkGameOver(){
 }
 
 function waitTime() {
-    return new Promise(resolve => setTimeout(resolve, 500)); // Aguarda 2 segundos
+    return new Promise(resolve => setTimeout(resolve, 500)); // Aguarda 0,5 segundos
 }
 
+function createGoal(){
+    context.fillStyle="red";
+    context.fillRect(newGoal[0].x, newGoal[0].y,box,box)
+}
+
+function addElement(){
+    if (snake[0].x === newGoal[0].x && snake[0].y === newGoal[0].y){
+        snake [snake.length] = {
+            x: newGoal[0].x-32,
+            y: newGoal[0].y-32
+        } 
+        return true;
+    }
+    return false;
+}
 
 async function snakeGame() {
 
-    criarBG();  
+    createBG();  
+    createGoal(); // teste
 
     do{
-        criarCobrinha();
+        createGoal(); //teste
+        createSneak();
+        await waitTime(); // pausa de  0,5 segundos
         getDirection();
-        await waitTime(); // pausa de  1 segundos
-        clearSnakeLastElement();
 
-        if(direction=="ArrowRight"){
-            snake[0].x= snake[0].x+box; 
-        }else if(direction=="ArrowLeft"){
-            snake[0].x= snake[0].x-box; 
-        }else if(direction=="ArrowUp"){
-            snake[0].y= snake[0].y-box; 
-        }else if(direction=="ArrowDown"){
-            snake[0].y= snake[0].y+box;  
-        }
+        if (!addElement())
+            clearLastElement();
 
-        checkGameOver(); 
-        
+        moveSnake();
+        checkGameOver();    
     }while(!gameOver);
-
+    
+    context.font="80px Arial";
+    context.fillStyle="red";
+    context.fillText("Game Over", 2*box, 7*box);
 }
 
 snakeGame();
