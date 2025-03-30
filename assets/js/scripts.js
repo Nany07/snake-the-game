@@ -9,12 +9,8 @@ snake [0]={
     y:7 * box
 }
 
-// testando novo elemento no canva
-let newGoal = [];
-newGoal [0]={
-    x:4 * box,
-    y:4 * box
-}
+let xFoodPosition = 0;
+let yFoodPosition = 0;
 
 let direction = "ArrowRight";
 let gameOver = false;
@@ -78,16 +74,32 @@ function waitTime() {
     return new Promise(resolve => setTimeout(resolve, 500)); // Aguarda 0,5 segundos
 }
 
-function createGoal(){
+function createFood(){
+    let findEmptySpace = true;
+    
+
+    do{
+        findEmptySpace = true;
+        xFoodPosition = Math.floor(Math.random()*(17))*box;
+        yFoodPosition = Math.floor(Math.random()*(17))*box;
+        // Math.floor(Math.random() * (max - min + 1)) + min;
+        
+        for(let i=0; i<snake.length; i++){
+            if(snake[i].x === xFoodPosition && snake[i].y === yFoodPosition){
+                findEmptySpace=false;
+            }       
+        }
+        }while(!findEmptySpace);
+
     context.fillStyle="red";
-    context.fillRect(newGoal[0].x, newGoal[0].y,box,box)
+    context.fillRect(xFoodPosition, yFoodPosition,box,box);
 }
 
-function addElement(){
-    if (snake[0].x === newGoal[0].x && snake[0].y === newGoal[0].y){
+function getFood(){
+    if (snake[0].x === xFoodPosition && snake[0].y === yFoodPosition){
         snake [snake.length] = {
-            x: newGoal[0].x-32,
-            y: newGoal[0].y-32
+            x: xFoodPosition-32,
+            y: yFoodPosition-32
         } 
         return true;
     }
@@ -97,16 +109,18 @@ function addElement(){
 async function snakeGame() {
 
     createBG();  
-    createGoal(); // teste
+    createFood(); // teste
 
     do{
-        createGoal(); //teste
         createSneak();
         await waitTime(); // pausa de  0,5 segundos
         getDirection();
 
-        if (!addElement())
+        if (!getFood()){
             clearLastElement();
+        }else{
+            createFood(); //teste
+        }
 
         moveSnake();
         checkGameOver();    
@@ -114,7 +128,7 @@ async function snakeGame() {
     
     context.font="80px Arial";
     context.fillStyle="red";
-    context.fillText("Game Over", 2*box, 7*box);
+    context.fillText("Game Over", 2*box, 9*box);
 }
 
 snakeGame();
