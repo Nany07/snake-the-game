@@ -80,8 +80,8 @@ function createFood(){
 
     do{
         findEmptySpace = true;
-        xFoodPosition = Math.floor(Math.random()*(17))*box;
-        yFoodPosition = Math.floor(Math.random()*(17))*box;
+        xFoodPosition = Math.floor(Math.random()*(16))*box;
+        yFoodPosition = Math.floor(Math.random()*(16))*box;
         // Math.floor(Math.random() * (max - min + 1)) + min;
         
         for(let i=0; i<snake.length; i++){
