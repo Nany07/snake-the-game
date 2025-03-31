@@ -2,6 +2,7 @@
 let canvas = document.getElementById("snake");
 let context = canvas.getContext("2d");
 let box = 32;
+let pointCount = 0;
 
 let snake = [];
 snake [0]={
@@ -119,7 +120,8 @@ async function snakeGame() {
         if (!getFood()){
             clearLastElement();
         }else{
-            createFood(); //teste
+            pointCount++;
+            createFood();
         }
 
         moveSnake();
@@ -129,6 +131,10 @@ async function snakeGame() {
     context.font="80px Arial";
     context.fillStyle="red";
     context.fillText("Game Over", 2*box, 9*box);
+
+    context.font= "80px Times New Roman";
+    context.fillStyle="blue";
+    context.fillText(`Pontos: ${pointCount}`,4*box,3*box);
 }
 
 snakeGame();
