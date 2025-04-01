@@ -14,6 +14,7 @@ let xFoodPosition = 0;
 let yFoodPosition = 0;
 
 let direction = "ArrowRight";
+let lastDirection = direction;
 let gameOver = false;
 
 function createBG(){
@@ -42,13 +43,17 @@ function moveSnake(){
     }
 
     if(direction=="ArrowRight"){
-        snake[0].x= snake[0].x+box; 
+        snake[0].x+=box; 
+        lastDirection=direction;
     }else if(direction=="ArrowLeft"){
-        snake[0].x= snake[0].x-box; 
+        snake[0].x-=box; 
+        lastDirection=direction;
     }else if(direction=="ArrowUp"){
-        snake[0].y= snake[0].y-box; 
+        snake[0].y-=box; 
+        lastDirection=direction;
     }else if(direction=="ArrowDown"){
-        snake[0].y= snake[0].y+box;  
+        snake[0].y+=box;  
+        lastDirection=direction;
     }
 }
 
@@ -61,6 +66,11 @@ function getDirection(){
             case "ArrowDown": direction = "ArrowDown"; break;
         }
     }) 
+
+    // Impede que a cobra ande para "trás"
+    if(direction === "ArrowRight" && lastDirection === "ArrowLeft" || direction ==="ArrowLeft" && lastDirection === "ArrowRight"||direction ==="ArrowUp" && lastDirection === "ArrowDown" || direction ==="ArrowDown" && lastDirection === "ArrowUp")
+        direction = lastDirection;
+
 }
 
 function checkGameOver(){
