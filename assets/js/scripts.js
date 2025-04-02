@@ -75,8 +75,12 @@ function getDirection(){
 
 function checkGameOver(){
     // Caso a cobrinha ultrapassar os limites do canva
-    for(let i=0; i<snake.length; i++){
-        if(snake[i].x<0 || snake[i].x>=512 || snake[i].y<0 || snake[i].y>=512)
+    // for(let i=0; i<snake.length; i++){
+    //     if(snake[i].x<0 || snake[i].x>=512 || snake[i].y<0 || snake[i].y>=512)
+    //         gameOver=true;
+    // }
+    for(let i=1; i<snake.length; i++){
+        if(snake[0].x === snake[i].x && snake[0].y === snake[i].y)
             gameOver=true;
     }
 }
