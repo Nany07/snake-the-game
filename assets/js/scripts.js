@@ -35,27 +35,6 @@ function clearLastElement(){
     context.fillRect(snake[snake.length-1].x,snake[snake.length-1].y,box,box);
 }
 
-function moveSnake(){
-
-    for(let i=snake.length-1; i>0;i--){
-        snake[i].x=snake[i-1].x;
-        snake[i].y=snake[i-1].y;
-    }
-
-    if(direction=="ArrowRight"){
-        snake[0].x+=box; 
-        lastDirection=direction;
-    }else if(direction=="ArrowLeft"){
-        snake[0].x-=box; 
-        lastDirection=direction;
-    }else if(direction=="ArrowUp"){
-        snake[0].y-=box; 
-        lastDirection=direction;
-    }else if(direction=="ArrowDown"){
-        snake[0].y+=box;  
-        lastDirection=direction;
-    }
-}
 
 function getDirection(){
     document.addEventListener("keydown",function(event){
@@ -74,11 +53,7 @@ function getDirection(){
 }
 
 function checkGameOver(){
-    // Caso a cobrinha ultrapassar os limites do canva
-    // for(let i=0; i<snake.length; i++){
-    //     if(snake[i].x<0 || snake[i].x>=512 || snake[i].y<0 || snake[i].y>=512)
-    //         gameOver=true;
-    // }
+   
     for(let i=1; i<snake.length; i++){
         if(snake[0].x === snake[i].x && snake[0].y === snake[i].y)
             gameOver=true;
@@ -97,7 +72,6 @@ function createFood(){
         findEmptySpace = true;
         xFoodPosition = Math.floor(Math.random()*(16))*box;
         yFoodPosition = Math.floor(Math.random()*(16))*box;
-        // Math.floor(Math.random() * (max - min + 1)) + min;
         
         for(let i=0; i<snake.length; i++){
             if(snake[i].x === xFoodPosition && snake[i].y === yFoodPosition){
@@ -137,9 +111,38 @@ async function snakeGame() {
             pointCount++;
             createFood();
         }
+        // Move o corpo da cobra 
+        for(let i=snake.length-1; i>0;i--){
+            snake[i].x=snake[i-1].x;
+            snake[i].y=snake[i-1].y;
+        }
+        // Move a cabeça da cobra
+        if(direction=="ArrowRight"){
+            snake[0].x+=box; 
+            lastDirection=direction;
+        }else if(direction=="ArrowLeft"){
+            snake[0].x-=box; 
+            lastDirection=direction;
+        }else if(direction=="ArrowUp"){
+            snake[0].y-=box; 
+            lastDirection=direction;
+        }else if(direction=="ArrowDown"){
+            snake[0].y+=box;  
+            lastDirection=direction;
+        }
+    
+        // Ultrapassar parede
+        if(snake[0].x>=512){
+            snake[0].x=0;
+        }else if (snake[0].x<0)
+            snake[0].x=480;
+        if(snake[0].y>=512){
+            snake[0].y=0;
+        }else if (snake[0].y<0)
+            snake[0].y=480;
 
-        moveSnake();
-        checkGameOver();    
+        checkGameOver();  
+
     }while(!gameOver);
     
     context.font="80px Arial";
