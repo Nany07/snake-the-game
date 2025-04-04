@@ -17,6 +17,7 @@ let direction = "ArrowRight";
 let lastDirection = direction;
 let gameOver = false;
 
+
 function createBG(){
     context.fillStyle = "lightgreen";
     context.fillRect(0,0, 16*box, 16*box);
@@ -95,15 +96,27 @@ function getFood(){
     return false;
 }
 
+let isPaused= false;
+
+document.addEventListener("keydown",function(event){
+    if(event.key === "p"){
+        isPaused = !isPaused;
+    }
+})
+
+
 async function snakeGame() {
 
-    createBG();  
-    createFood(); // teste
+    if(gameOver){
+        gameOverScreen();
+        return;
+    }
 
-    do{
+    if(!isPaused){
         createSneak();
         await waitTime(); // pausa de  0,5 segundos
         getDirection();
+        
 
         if (!getFood()){
             clearLastElement();
@@ -111,25 +124,24 @@ async function snakeGame() {
             pointCount++;
             createFood();
         }
-        // Move o corpo da cobra 
-        for(let i=snake.length-1; i>0;i--){
+        
+         // Move o corpo da cobra 
+         for(let i=snake.length-1; i>0;i--){
             snake[i].x=snake[i-1].x;
             snake[i].y=snake[i-1].y;
         }
+
         // Move a cabeça da cobra
         if(direction=="ArrowRight"){
             snake[0].x+=box; 
-            lastDirection=direction;
         }else if(direction=="ArrowLeft"){
             snake[0].x-=box; 
-            lastDirection=direction;
         }else if(direction=="ArrowUp"){
             snake[0].y-=box; 
-            lastDirection=direction;
         }else if(direction=="ArrowDown"){
             snake[0].y+=box;  
-            lastDirection=direction;
         }
+        lastDirection=direction;
     
         // Ultrapassar parede
         if(snake[0].x>=512){
@@ -140,11 +152,15 @@ async function snakeGame() {
             snake[0].y=0;
         }else if (snake[0].y<0)
             snake[0].y=480;
-
+        
         checkGameOver();  
+    }    
 
-    }while(!gameOver);
-    
+    requestAnimationFrame(snakeGame);   
+}
+
+function gameOverScreen(){
+
     context.font="80px Arial";
     context.fillStyle="red";
     context.fillText("Game Over", 2*box, 9*box);
@@ -154,4 +170,6 @@ async function snakeGame() {
     context.fillText(`Pontos: ${pointCount}`,4*box,3*box);
 }
 
+createBG();  
+createFood(); // teste
 snakeGame();
