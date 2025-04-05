@@ -101,6 +101,7 @@ let isPaused= false;
 document.addEventListener("keydown",function(event){
     if(event.key === "p"){
         isPaused = !isPaused;
+        alert(isPaused ? "Jogo Pausado - Para voltar precione P":"Jogo Rodando");
     }
 })
 
