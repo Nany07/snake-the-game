@@ -2,6 +2,7 @@
 let canvas = document.getElementById("snake");
 let context = canvas.getContext("2d");
 let box = 32;
+let point = document.getElementById("point");
 let pointCount = 0;
 
 let snake = [];
@@ -122,7 +123,7 @@ async function snakeGame() {
         if (!getFood()){
             clearLastElement();
         }else{
-            pointCount++;
+            point.innerHTML= ++pointCount;
             createFood();
         }
         
@@ -156,7 +157,6 @@ async function snakeGame() {
         
         checkGameOver();  
     }    
-
     requestAnimationFrame(snakeGame);   
 }
 

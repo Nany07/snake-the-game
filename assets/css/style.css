@@ -11,10 +11,33 @@ body{
 h1{
     color:green;
     font-size: 2.5em;
-    margin: 10px 0px 10px;
+    margin: 10px 0px 5px;
     background: transparent;
 }
 
 #snake{
     border: solid green 0.2rem;
+}
+
+
+div{
+    display: flex;
+    flex-direction:row;
+}
+
+p, div{
+    background: transparent;
+}
+
+#point{
+    font-size: 2rem;
+    background: transparent;
+    color: green;
+    margin: 0.2rem;
+}
+
+#square{
+    width: 20px;
+    height: 20px;
+    background: red;
 }
