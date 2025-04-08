@@ -30,14 +30,17 @@ p, div{
 }
 
 #point{
-    font-size: 2rem;
+    font-size: 1.7rem;
     background: transparent;
     color: green;
     margin: 0.2rem;
 }
 
-#square{
+p::before{
+    content: "";
+    display: inline-block;
     width: 20px;
     height: 20px;
     background: red;
+    margin-right: .6rem;
 }
