@@ -1,37 +1,30 @@
 *{
     justify-items: center;
-    background: linear-gradient(to right,green, transparent,green);
     font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
 
 body{
-    background: transparent;
+    background: linear-gradient(to right,green, transparent,green);
+
 }
 
 h1{
     color:green;
     font-size: 2.5em;
     margin: 10px 0px 5px;
-    background: transparent;
 }
 
 #snake{
     border: solid green 0.2rem;
 }
 
-
 div{
     display: flex;
     flex-direction:row;
 }
 
-p, div{
-    background: transparent;
-}
-
 #point{
     font-size: 1.7rem;
-    background: transparent;
     color: green;
     margin: 0.2rem;
 }
@@ -44,3 +37,4 @@ p::before{
     background: red;
     margin-right: .6rem;
 }
+
