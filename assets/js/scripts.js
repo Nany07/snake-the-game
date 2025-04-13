@@ -18,6 +18,12 @@ let direction = "ArrowRight";
 let lastDirection = direction;
 let gameOver = false;
 
+const invalido = {
+    "ArrowRight": "ArrowLeft",
+    "ArrowLeft": "ArrowRight",
+    "ArrowUp":"ArrowDown",
+    "ArrowDown":"ArrowUp"
+};
 
 function createBG(){
     context.fillStyle = "lightgreen";
@@ -47,11 +53,10 @@ function getDirection(){
             case "ArrowDown": direction = "ArrowDown"; break;
         }
     }) 
-
-    // Impede que a cobra ande para "trás"
-    if(direction === "ArrowRight" && lastDirection === "ArrowLeft" || direction ==="ArrowLeft" && lastDirection === "ArrowRight"||direction ==="ArrowUp" && lastDirection === "ArrowDown" || direction ==="ArrowDown" && lastDirection === "ArrowUp")
-        direction = lastDirection;
-
+    
+    // Impede movimentos inválidos 
+    if (invalido[direction] === lastDirection)
+        direction=lastDirection;
 }
 
 function checkGameOver(){
